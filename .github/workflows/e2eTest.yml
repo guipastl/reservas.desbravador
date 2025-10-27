@@ -1,0 +1,20 @@
+name: End-to-end tests
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: set up env
+        run: |
+          echo "BASE_URL="${{ secrets.BASE_URL }}"" >> .env
+          echo "USER_EMAIL="${{ secrets.USER_EMAIL }}"" >> .env
+          echo "USER_NAME="${{ secrets.USER_NAME }}"" >> .env
+          echo "USER_PASS="${{ secrets.USER_PASS }}"" >> .env
+          echo "USER_ID="${{ secrets.USER_ID }}"" >> .env
+
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
